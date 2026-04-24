@@ -1,54 +1,37 @@
 from django.db import models
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
+from portfolio.blocks import PortfolioStreamBlock
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
-from wagtail.fields import RichTextField
+from wagtail.blocks import CharBlock, RichTextBlock, StructBlock
+from wagtail.fields import RichTextField, StreamField
 from wagtail.models import Orderable, Page
 from wagtail.snippets.models import register_snippet
 
 
 class HomePage(Page):
-    image = models.ForeignKey(
-        "wagtailimages.Image",
-        null=True,
+    about = RichTextField(features=["bold", "italic", "link"])
+    projects = StreamField(
+        PortfolioStreamBlock(),
         blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+"
+        use_json_field=True,
+        help_text="Use this section to list your projects.",
     )
-    hero_text = models.CharField(
-        blank=True,
-        max_length=255, help_text="Write an introduction for the site"
-    )
-    hero_cta = models.CharField(
-        blank=True,
-        verbose_name="Hero CTA",
-        max_length=255,
-        help_text="Text to display on call to Action",
-    )
-    hero_cta_link = models.ForeignKey(
-        "wagtailcore.Page",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-        verbose_name="Hero CTA link",
-        help_text="Choose a page to link to the call to Action",
-    )
-    body = RichTextField(blank=True)
+    experience = StreamField([
+        ('experience', StructBlock([
+            ('company', CharBlock(required=False)),
+            ('role', CharBlock(required=False)),
+            ('period', CharBlock()),
+            ('description', RichTextBlock(features=["bold", "italic", "link"])),
+            ('tags', CharBlock(required=False, help_text="Enter comma-separated tags")),
+        ]))
+    ])
 
     content_panels = Page.content_panels + [
-        MultiFieldPanel(
-            [
-                FieldPanel("image"),
-                FieldPanel("hero_text"),
-                FieldPanel("hero_cta"),
-                FieldPanel("hero_cta_link"),
-            ],
-            heading="Hero section"
-        ),
-        FieldPanel('body'),
+        "about",
+        "experience",
+        FieldPanel("projects"),
     ]
-
 
 @register_snippet
 class HomePageAside(ClusterableModel):

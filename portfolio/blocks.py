@@ -1,28 +1,26 @@
 from base.blocks import BaseStreamBlock
 from wagtail.blocks import (CharBlock, ListBlock, PageChooserBlock,
-                            RichTextBlock, StructBlock)
+                            RichTextBlock, StructBlock, StructValue)
 from wagtail.images.blocks import ImageBlock
 
 
+class CardValueBlock(StructValue):
+
+    def tags_list(self):
+        tags = self.get('tags', None)
+        if tags:
+            return tags.split(',')
+
 class CardBlock(StructBlock):
     heading = CharBlock()
-    text = RichTextBlock(features=["bold", "italic", "link"])
-    image = ImageBlock(required=False)
+    description = RichTextBlock(features=["bold", "italic", "link"])
+    tags = CharBlock(required=False, help_text="Enter comma-separated tags")
 
 
     class Meta:
         icon = "form"
         template = "portfolio/blocks/card_block.html"
-
-class FeaturedPostsBlock(StructBlock):
-    heading = CharBlock()
-    text = RichTextBlock(features=["bold", "italic", "link"], required=False)
-    posts = ListBlock(PageChooserBlock(page_type="blog.BlogPage"))
-
-    class Meta:
-        icon = "folder-open-inverse"
-        template = "portfolio/blocks/featured_posts_block.html"
+        value_class = CardValueBlock
 
 class PortfolioStreamBlock(BaseStreamBlock):
     card = CardBlock(group="Sections")
-    featured_posts = FeaturedPostsBlock(group="Sections")

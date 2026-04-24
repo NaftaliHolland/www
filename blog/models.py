@@ -13,8 +13,8 @@ from wagtail.snippets.models import register_snippet
 class BlogIndexPage(Page):
     intro = RichTextField(blank=True)
 
-    def get_context(self, requext):
-        context = super().get_context(requext)
+    def get_context(self, request):
+        context = super().get_context(request)
 
         blog_pages = self.get_children().live().order_by("-first_published_at")
         context["blogpages"] = blog_pages

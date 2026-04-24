@@ -1,8 +1,17 @@
-{% load wagtailcore_tags wagtailimages_tags %}
-<div class="card">
-    <h3>{{ self.heading }}</h3>
-    <div>{{ self.text|richtext }}</div>
-    {% if self.image %}
-        {% image self.image width-480 %}
-    {% endif %}
+{% load wagtailcore_tags %}
+
+<div class="group px-6 py-7 -mx-6 rounded-xl border border-transparent hover:border-stone-950 hover:bg-stone-900/90 transition-all duration-200">
+	<div>
+		<div class="font-semibold text-stone-200">{{ self.heading }}</div>
+			<p class="text-stone-200 font-light mt-1.5">
+			{{ self.description|richtext }}
+		</p>
+		{% if self.tags %}
+		<div class="flex flex-wrap gap-1.5 mt-3">
+			{% for tag in self.tags_list %}
+				<span class="font-medium text-sm bg-stone-950/10 text-stone-400 px-2.5 py-1 rounded border border-stone-950/70">{{ tag }}</span>
+			{% endfor %}
+		</div>
+		{% endif %}
+	</div>
 </div>

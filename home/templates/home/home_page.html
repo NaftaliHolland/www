@@ -37,58 +37,55 @@
       <p class="font-medium uppercase text-stone-200 mb-8 flex items-center gap-3">About</p>
       <div class="flex flex-col gap-4 text-stone-200">
         <p>
-					I'm a junior software engineer who enjoys building web applications with Python, Django, React, Next.js and TypeScript.
-					I'm especially interested in backend systems, clean architecture, and understanding how the pieces of a system fit together.
-					Most of my time is spent building projects, learning new things, and getting better at the craft of software engineering.
+						{{ page.about|richtext }}
 				</p>
       </div>
     </section>
 
     <!-- Experience -->
+		{% if page.experience %}
     <section id="experience">
       <p class="font-medium tracking-[2px] uppercase text-stone-200 mb-8 flex items-center gap-3">Experience</p>
       <div class="flex flex-col">
-        <div class="group grid grid-cols-4 gap-8 px-6 py-7 rounded-sm border border-transparent hover:border-stone-950 hover:bg-stone-900/90 transition-all duration-200">
+				{% for experience in page.experience %}
+        <div class="group grid grid-cols-4 gap-6 px-2 py-7 rounded-sm border border-transparent hover:border-stone-950 hover:bg-stone-900/90 transition-all duration-200">
 
-          <div class="font-mono font-medium text-stone-200 pt-0.5">2016 — 2017</div>
+						<div class="font-mono text-sm font-medium text-stone-200 pt-0.5">{{ experience.value.period }}</div>
           <div class="col-span-3">
-            <div class="font-semibold text-stone-200">Adamur - Backend Developer Intern</div>
+							<div class="flex flex-col font-semibold text-stone-200">{{ experience.value.company }}
+							<span class="font-thin text-sm text-stone-200">{{ experience.value.role }}</span>
+							</div>
             <p class="text-stone-200 font-light mt-2.5">
-							Built backend features for a project management web application using Python, Django, and Django REST Framework, enabling users to create, assign, and track projects and milestones; integrated external services including GitHub, Paystack, and Slack for repository linking, payment processing, and team notifications; designed an invite-based onboarding system for seamless collaborator access; developed a transactional email notification system for milestone and activity alerts; integrated OpenAI APIs to auto-generate project milestones from user descriptions.
+								{{ experience.value.description }}
 						</p>
+						{% if experience.tags %}
             <div class="flex flex-wrap gap-1.5 mt-3.5">
-              <span class="font-medium text-sm bg-stone-950/10 text-stone-400 px-2.5 py-1 rounded border border-stone-950/70">Python</span>
-              <span class="font-medium text-sm bg-stone-950/10 text-stone-400 px-2.5 py-1 rounded border border-stone-950/70">Django</span>
-              <span class="font-medium text-sm bg-stone-950/10 text-stone-400 px-2.5 py-1 rounded border border-stone-950/70">DRF</span>
+
+								{% for tag in experience.value.tags %}
+								<span class="font-medium text-sm bg-stone-950/10 text-stone-400 px-2.5 py-1 rounded border border-stone-950/70">{{ tag }}</span>
+								{% endfor %}
             </div>
+							{% endif %}
           </div>
         </div>
 
+			{% endfor %}
       </div>
-      <a href="#" class="inline-flex px-6 items-center text-sm font-medium uppercase text-stone-300 mt-6 hover:text-stone-400 transition-all duration-200">View Full Resume</a>
+				<!-- Implement download resume -->
+				<!--<a href="#" class="inline-flex px-6 items-center text-sm font-medium uppercase text-stone-300 mt-6 hover:text-stone-400 transition-all duration-200">View Full Resume</a>-->
     </section>
+		{% endif %}
 
     <!-- Projects -->
+		{% if page.projects %}
     <section id="projects">
       <p class="font-medium tracking-[2px] uppercase text-stone-200 mb-8 flex items-center gap-3">Projects</p>
       <div class="flex flex-col">
-
-        <div class="group px-6 py-7 -mx-6 rounded-xl border border-transparent hover:border-stone-950 hover:bg-stone-900/90 transition-all duration-200">
-          <div>
-            <div class="font-semibold text-stone-200">FgTrailers</div>
-            <p class="text-stone-200 font-light mt-1.5">
-            Video course teaching how to build a web app with the Spotify Web API. REST APIs, user auth flows, Node, Express, React, and Styled Components.</p>
-            <div class="flex flex-wrap gap-1.5 mt-3">
-              <span class="font-medium text-sm bg-stone-950/10 text-stone-400 px-2.5 py-1 rounded border border-stone-950/70">Python</span>
-              <span class="font-medium text-sm bg-stone-950/10 text-stone-400 px-2.5 py-1 rounded border border-stone-950/70">Python</span>
-            </div>
-          </div>
-        </div>
-
+					{{ page.projects }}
       </div>
-			<!-- enable this when I'll have more projects later -->
-			<!--<a href="#" class="inline-flex items-center gap-2 font-mono text-[11px] font-medium tracking-widest uppercase text-[#5b9cf6] mt-6 px-5 py-2.5 border border-[#2a4a7f] rounded-md hover:bg-[#2a4a7f] hover:text-[#e2e8f4] hover:border-[#5b9cf6] transition-all duration-200">View Full Project Archive ↗</a>-->
+			<!-- Link to projects page -->
     </section>
+		{% endif %}
   </main>
 </div>
 

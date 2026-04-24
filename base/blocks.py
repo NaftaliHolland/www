@@ -35,7 +35,6 @@ class HeadingBlock(StructBlock):
         icon = "title"
         template = "base/blocks/heading_block.html"
 
-
 class BaseStreamBlock(StreamBlock):
     heading_block = HeadingBlock()
     paragraph_block = RichTextBlock(icon="pilcrow")
