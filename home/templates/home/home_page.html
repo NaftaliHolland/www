@@ -25,13 +25,13 @@
 {% block content %}
 <body class="text-gray-100 min-h-screen">
 
-<div class="max-w-6xl mx-auto px-10 flex gap-10 min-h-screen">
+<div class="max-w-6xl mx-auto px-10 flex flex-col lg:flex-row gap-10 min-h-screen">
 
   <!-- Sidebar -->
 
 	{% aside %}
 
-  <main class="flex-1 py-20 flex flex-col gap-28">
+  <main class="flex-1 lg:py-20 flex flex-col gap-16">
 
     <section id="about">
       <p class="font-medium uppercase text-stone-200 mb-8 flex items-center gap-3">About</p>
@@ -50,8 +50,8 @@
 				{% for experience in page.experience %}
         <div class="group grid grid-cols-4 gap-6 px-2 py-7 rounded-sm border border-transparent hover:border-stone-950 hover:bg-stone-900/90 transition-all duration-200">
 
-						<div class="font-mono text-sm font-medium text-stone-200 pt-0.5">{{ experience.value.period }}</div>
-          <div class="col-span-3">
+						<div class="font-mono text-sm font-medium text-stone-200 pt-0.5 col-span-4 sm:col-span-1">{{ experience.value.period }}</div>
+          <div class="col-span-4 md:col-span-3">
 							<div class="flex flex-col font-semibold text-stone-200">{{ experience.value.company }}
 							<span class="font-thin text-sm text-stone-200">{{ experience.value.role }}</span>
 							</div>
