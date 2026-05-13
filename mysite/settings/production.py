@@ -1,6 +1,8 @@
-from .base import *
 import os
+
 from dotenv import load_dotenv
+
+from .base import *
 
 load_dotenv()
 DEBUG = False
@@ -12,18 +14,20 @@ DEBUG = False
 STORAGES["staticfiles"]["BACKEND"] = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 
 SECRET_KEY=os.getenv('SECRET_KEY')
-ALLOWED_HOSTS=['localhost', '206.189.140.88', 'naftaliholland.me']
+# NOTE: Read this from .env
+
+ALLOWED_HOSTS=os.getenv('ALLOWED_HOSTS').strip().split(',')
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 DATABASES = {
     "default": {
 		'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'www',
-        'USER': 'wwwuser',
-        'PASSWORD': 'wwwuser@10503',
-        'HOST': 'localhost',
-        'PORT': '',
+        'NAME': os.getenv('PG_NAME'),
+        'USER': os.getenv('PG_USER'),
+        'PASSWORD': os.getenv('PG_PASSWORD'),
+        'HOST': os.getenv('PG_HOST'),
+        'PORT': os.getenv('PG_PORT'),
     }
 }
 
