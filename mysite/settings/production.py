@@ -14,7 +14,6 @@ DEBUG = False
 STORAGES["staticfiles"]["BACKEND"] = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 
 SECRET_KEY=os.getenv('SECRET_KEY')
-# NOTE: Read this from .env
 
 ALLOWED_HOSTS=os.getenv('ALLOWED_HOSTS').strip().split(',')
 
