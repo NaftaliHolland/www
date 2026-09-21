@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% block content %}
+<section class="max-w-site mx-auto px-6 md:px-10 pt-16 pb-10">
+  <p class="font-mono text-[13px] text-muted mb-3">/speaking</p>
+  <h1 class="font-display text-4xl md:text-5xl tracking-tight max-w-2xl">{{ page.title }}</h1>
+  {% if page.intro %}<div class="richtext mt-5 text-inksoft max-w-xl leading-relaxed">{{ page.intro|richtext }}</div>{% endif %}
+</section>
+
+{% if talks %}
+<section class="max-w-site mx-auto px-6 md:px-10 pb-16">
+  <div class="grid md:grid-cols-2 gap-5">
+    {% for talk in talks %}
+    <article class="card-hover border border-line bg-card p-7">
+      <p class="font-mono text-xs text-muted mb-2">{{ talk.date|date:"M Y" }}{% if talk.venue %} · {{ talk.venue }}{% endif %}</p>
+      <h3 class="font-display text-xl mb-2"><a href="{% pageurl talk %}" class="hover:text-signal transition-colors">{{ talk.title }}</a></h3>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% else %}
+<section class="max-w-site mx-auto px-6 md:px-10 pb-16">
+  <div class="border border-dashed border-line p-10 md:p-14 text-center">
+    <p class="font-mono text-xs text-muted mb-3">status: not yet scheduled</p>
+    <h2 class="font-display text-2xl mb-4">{{ page.empty_state_heading }}</h2>
+    <p class="text-inksoft max-w-md mx-auto leading-relaxed">{{ page.empty_state_body }}</p>
+    {% if nav_contact %}<a href="{% pageurl nav_contact %}" class="inline-block mt-6 font-mono text-sm px-6 py-3 border border-ink hover:bg-ink hover:text-paper transition-colors">invite me →</a>{% endif %}
+  </div>
+</section>
+{% endif %}
+
+{% if page.topics.all %}
+<section class="max-w-site mx-auto px-6 md:px-10 pb-24">
+  <p class="font-mono text-[13px] text-muted mb-6">topics i could speak on</p>
+  <div class="space-y-0">
+    {% for topic in page.topics.all %}
+    <div class="py-5 border-t {% if forloop.last %}border-b{% endif %} border-line">
+      <h3 class="font-display text-lg mb-1">{{ topic.title }}</h3>
+      {% if topic.description %}<p class="text-inksoft text-[15px] leading-relaxed max-w-2xl">{{ topic.description }}</p>{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+{% endblock %}

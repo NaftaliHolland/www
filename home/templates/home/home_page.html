@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% block body_class %}template-homepage{% endblock %}
+
+{% block content %}
+<div id="top">
+
+  <!-- Hero / About -->
+  <section id="about" class="max-w-site mx-auto px-6 md:px-10 pt-16 md:pt-24 pb-16 md:pb-24">
+    <p class="font-mono text-[13px] text-muted mb-6">{{ page.home_subtitle }}</p>
+    <h1 class="font-display text-4xl sm:text-5xl md:text-6xl leading-[1.08] tracking-tight max-w-3xl">
+      {{ page.hero_heading }}
+    </h1>
+    {% if page.about_text %}
+    <div class="richtext mt-8 max-w-2xl text-lg text-inksoft leading-relaxed">
+      {{ page.about_text|richtext }}
+    </div>
+    {% endif %}
+
+    {% if page.skills.all %}
+    <div class="mt-10 flex flex-wrap gap-2">
+      {% for skill in page.skills.all %}
+      <span class="font-mono text-xs px-3 py-1.5 border border-line text-inksoft">{{ skill.name }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </section>
+
+  <!-- Featured Work -->
+  {% if featured_projects %}
+  <section id="work" class="section-rule">
+    <div class="max-w-site mx-auto px-6 md:px-10 py-16 md:py-24">
+      <div class="flex items-end justify-between flex-wrap gap-4 mb-10">
+        <div>
+          <p class="font-mono text-[13px] text-muted mb-3">/work</p>
+          <h2 class="font-display text-3xl md:text-4xl tracking-tight">Featured work</h2>
+        </div>
+        {% if nav_projects %}
+        <a href="{% pageurl nav_projects %}" class="font-mono text-[13px] text-signal hover:underline whitespace-nowrap">view all projects →</a>
+        {% endif %}
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-5">
+        {% for project in featured_projects %}
+        <article class="card-hover border border-line bg-card p-6 md:p-7">
+          <div class="flex items-center justify-between mb-4">
+            <span class="font-mono text-xs {{ project.status_text_class }} flex items-center gap-2">
+              <span class="status-dot {{ project.status_dot_class }}"></span> {{ project.get_status_display|lower }}
+            </span>
+          </div>
+          <h3 class="font-display text-xl mb-2"><a href="{% pageurl project %}" class="hover:text-signal transition-colors">{{ project.title }}</a></h3>
+          <p class="text-inksoft text-[15px] leading-relaxed mb-4">{{ project.summary }}</p>
+          {% if project.tech_tags.all %}
+          <div class="flex flex-wrap gap-2">
+            {% for tag in project.tech_tags.all %}<span class="font-mono text-[11px] text-muted">{{ tag.name }}</span>{% if not forloop.last %}<span class="font-mono text-[11px] text-muted">·</span>{% endif %}{% endfor %}
+          </div>
+          {% endif %}
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- Experience -->
+  {% if experience_items %}
+  <section id="experience" class="section-rule">
+    <div class="max-w-site mx-auto px-6 md:px-10 py-16 md:py-24">
+      <p class="font-mono text-[13px] text-muted mb-3">/experience</p>
+      <h2 class="font-display text-3xl md:text-4xl tracking-tight mb-10">Experience</h2>
+
+      {% for item in experience_items %}
+      <div class="border-l border-line pl-8 relative {% if not forloop.last %}mb-12{% endif %}">
+        <span class="absolute -left-[5px] top-1.5 w-[9px] h-[9px] rounded-full {% if forloop.first %}bg-signal{% else %}bg-line{% endif %}"></span>
+        <p class="font-mono text-[13px] text-muted mb-1">{{ item.date_range }}</p>
+        <h3 class="font-display text-xl mb-1">{{ item.role }}, {{ item.organisation }}</h3>
+        {% if item.summary %}<p class="text-inksoft leading-relaxed max-w-2xl mb-4">{{ item.summary }}</p>{% endif %}
+        {% if item.bullets.all %}
+        <ul class="space-y-2 text-inksoft text-[15px] leading-relaxed max-w-2xl">
+          {% for bullet in item.bullets.all %}
+          <li class="flex gap-3"><span class="text-signal font-mono">—</span> {{ bullet.text }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- Speaking -->
+  {% if nav_talks %}
+  <section id="speaking" class="section-rule">
+    <div class="max-w-site mx-auto px-6 md:px-10 py-16 md:py-24">
+      <div class="flex items-end justify-between flex-wrap gap-4 mb-10">
+        <div>
+          <p class="font-mono text-[13px] text-muted mb-3">/speaking</p>
+          <h2 class="font-display text-3xl md:text-4xl tracking-tight">Speaking</h2>
+        </div>
+        <a href="{% pageurl nav_talks %}" class="font-mono text-[13px] text-signal hover:underline whitespace-nowrap">view all talks →</a>
+      </div>
+
+      {% if latest_talks %}
+      <div class="grid md:grid-cols-2 gap-5">
+        {% for talk in latest_talks %}
+        <article class="card-hover border border-line bg-card p-6 md:p-7">
+          <p class="font-mono text-xs text-muted mb-2">{{ talk.date|date:"M Y" }}{% if talk.venue %} · {{ talk.venue }}{% endif %}</p>
+          <h3 class="font-display text-xl mb-2"><a href="{% pageurl talk %}" class="hover:text-signal transition-colors">{{ talk.title }}</a></h3>
+        </article>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="border border-dashed border-line p-8 md:p-10 text-center">
+        <p class="font-mono text-xs text-muted mb-3">no talks yet</p>
+        <p class="text-inksoft max-w-md mx-auto leading-relaxed">{{ nav_talks.empty_state_body }}</p>
+        {% if nav_contact %}<a href="{% pageurl nav_contact %}" class="inline-block mt-5 font-mono text-[13px] text-signal hover:underline">invite me to speak →</a>{% endif %}
+      </div>
+      {% endif %}
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- Writing -->
+  {% if nav_writing %}
+  <section id="writing" class="section-rule">
+    <div class="max-w-site mx-auto px-6 md:px-10 py-16 md:py-24">
+      <div class="flex items-end justify-between flex-wrap gap-4 mb-10">
+        <div>
+          <p class="font-mono text-[13px] text-muted mb-3">/writing</p>
+          <h2 class="font-display text-3xl md:text-4xl tracking-tight">Technical writing</h2>
+        </div>
+        <a href="{% pageurl nav_writing %}" class="font-mono text-[13px] text-signal hover:underline whitespace-nowrap">read all articles →</a>
+      </div>
+
+      {% if latest_articles %}
+      <div class="space-y-0">
+        {% for article in latest_articles %}
+        <a href="{% pageurl article %}" class="group flex items-center justify-between py-5 border-t {% if forloop.last %}border-b{% endif %} border-line hover:border-signal transition-colors">
+          <div>
+            <p class="font-mono text-xs text-muted mb-1">{{ article.get_status_display|lower }}</p>
+            <h3 class="font-display text-lg group-hover:text-signal transition-colors">{{ article.title }}</h3>
+          </div>
+          <span class="font-mono text-signal opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+        </a>
+        {% endfor %}
+      </div>
+      {% else %}
+      <p class="text-inksoft">Nothing published yet — check back soon.</p>
+      {% endif %}
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- Contact CTA -->
+  {% if nav_contact %}
+  <section class="section-rule bg-ink text-paper">
+    <div class="max-w-site mx-auto px-6 md:px-10 py-16 md:py-24 text-center">
+      <p class="font-mono text-[13px] text-signal mb-4">/contact</p>
+      <h2 class="font-display text-3xl md:text-4xl tracking-tight mb-5">{{ page.contact_heading }}</h2>
+      {% if page.contact_body %}<p class="text-white/60 max-w-md mx-auto mb-8 leading-relaxed">{{ page.contact_body }}</p>{% endif %}
+      <a href="{% pageurl nav_contact %}" class="inline-block font-mono text-sm px-6 py-3 bg-paper text-ink hover:bg-signal hover:text-paper transition-colors">get in touch →</a>
+    </div>
+  </section>
+  {% endif %}
+
+</div>
+{% endblock %}

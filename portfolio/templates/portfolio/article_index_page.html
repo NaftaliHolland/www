@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% block content %}
+<section class="max-w-site mx-auto px-6 md:px-10 pt-16 pb-10">
+  <p class="font-mono text-[13px] text-muted mb-3">/writing</p>
+  <h1 class="font-display text-4xl md:text-5xl tracking-tight max-w-2xl">{{ page.title }}</h1>
+  {% if page.intro %}<div class="richtext mt-5 text-inksoft max-w-xl leading-relaxed">{{ page.intro|richtext }}</div>{% endif %}
+</section>
+
+<section class="max-w-site mx-auto px-6 md:px-10 pb-24">
+  <div class="space-y-0">
+    {% for article in articles %}
+    <article class="py-7 border-t {% if forloop.last %}border-b{% endif %} border-line">
+      <p class="font-mono text-xs {% if article.status == 'planned' %}text-amber{% else %}text-signal{% endif %} mb-2">{{ article.get_status_display|lower }}</p>
+      <h2 class="font-display text-2xl mb-2"><a href="{% pageurl article %}" class="hover:text-signal transition-colors">{{ article.title }}</a></h2>
+      <p class="text-inksoft leading-relaxed max-w-2xl">{{ article.summary }}</p>
+    </article>
+    {% empty %}
+    <p class="text-inksoft py-7">Nothing published yet — check back soon.</p>
+    {% endfor %}
+  </div>
+
+  {% if nav_contact %}
+  <p class="font-mono text-xs text-muted mt-10">
+    Want to be notified when one of these goes live? <a href="{% pageurl nav_contact %}" class="text-signal hover:underline">get in touch →</a>
+  </p>
+  {% endif %}
+</section>
+{% endblock %}

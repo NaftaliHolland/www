@@ -1,0 +1,97 @@
+{% load static wagtailcore_tags wagtailuserbar %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+        {% block title %}{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}{% endblock %}
+        {% wagtail_site as current_site %}
+        {% if current_site and current_site.site_name %}- {{ current_site.site_name }}{% endif %}
+    </title>
+    {% if page.search_description %}<meta name="description" content="{{ page.search_description }}" />{% endif %}
+
+    {% if request.in_preview_panel %}<base target="_blank">{% endif %}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              paper: '#FAFAF7', ink: '#14161A', inksoft: '#4B5157', muted: '#8B9099',
+              line: '#E2E4E0', signal: '#0E6E5C', amber: '#B5762C', card: '#FFFFFF',
+            },
+            fontFamily: {
+              display: ['Montserrat', 'sans-serif'], body: ['Inter', 'sans-serif'], mono: ['"IBM Plex Mono"', 'monospace'],
+            },
+            maxWidth: { site: '72rem' }
+          }
+        }
+      }
+    </script>
+    <link rel="stylesheet" href="{% static 'css/www.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-paper text-ink font-body antialiased {% block body_class %}{% endblock %}">
+    {% wagtailuserbar %}
+
+    <header class="sticky top-0 z-50 bg-paper/90 backdrop-blur border-b border-line">
+      <div class="max-w-site mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
+        <a href="{% if nav_home %}{% pageurl nav_home %}{% else %}/{% endif %}" class="font-mono text-sm text-ink">
+          holland<span class="text-signal">@</span>dev<span class="text-muted">:~$</span><span class="cursor-blink text-signal">_</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-8 font-mono text-[13px] text-inksoft">
+          {% if nav_home %}<a href="{% pageurl nav_home %}#about" class="hover:text-signal transition-colors {% if self.pk == nav_home.pk %}text-signal{% endif %}">/about</a>{% endif %}
+          {% if nav_projects %}<a href="{% pageurl nav_projects %}" class="hover:text-signal transition-colors {% if page.pk == nav_projects.pk or nav_projects in page.get_ancestors %}text-signal{% endif %}">/work</a>{% endif %}
+          {% if nav_home %}<a href="{% pageurl nav_home %}#experience" class="hover:text-signal transition-colors">/experience</a>{% endif %}
+          {% if nav_talks %}<a href="{% pageurl nav_talks %}" class="hover:text-signal transition-colors {% if page.pk == nav_talks.pk or nav_talks in page.get_ancestors %}text-signal{% endif %}">/speaking</a>{% endif %}
+          {% if nav_writing %}<a href="{% pageurl nav_writing %}" class="hover:text-signal transition-colors {% if page.pk == nav_writing.pk or nav_writing in page.get_ancestors %}text-signal{% endif %}">/writing</a>{% endif %}
+          {% if nav_contact %}<a href="{% pageurl nav_contact %}" class="px-3 py-1.5 border {% if page.pk == nav_contact.pk %}border-signal text-signal{% else %}border-ink text-ink hover:bg-ink hover:text-paper{% endif %} transition-colors">/contact</a>{% endif %}
+        </nav>
+        <button id="menu-btn" class="md:hidden font-mono text-sm text-ink" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span id="menu-icon">menu</span>
+        </button>
+      </div>
+      <div id="mobile-menu" class="md:hidden border-t border-line">
+        <nav class="flex flex-col px-6 py-4 gap-4 font-mono text-sm text-inksoft">
+          {% if nav_home %}<a href="{% pageurl nav_home %}#about">/about</a>{% endif %}
+          {% if nav_projects %}<a href="{% pageurl nav_projects %}">/work</a>{% endif %}
+          {% if nav_home %}<a href="{% pageurl nav_home %}#experience">/experience</a>{% endif %}
+          {% if nav_talks %}<a href="{% pageurl nav_talks %}">/speaking</a>{% endif %}
+          {% if nav_writing %}<a href="{% pageurl nav_writing %}">/writing</a>{% endif %}
+          {% if nav_contact %}<a href="{% pageurl nav_contact %}">/contact</a>{% endif %}
+        </nav>
+      </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="border-t border-line">
+      <div class="max-w-site mx-auto px-6 md:px-10 py-8 flex flex-col md:flex-row items-center justify-between gap-3">
+        <p class="font-mono text-xs text-muted">© {% now "Y" %} Holland. Built with Wagtail & Tailwind.</p>
+        {% if nav_home %}<a href="{% pageurl nav_home %}" class="font-mono text-xs text-muted hover:text-signal transition-colors">← back home</a>{% endif %}
+      </div>
+    </footer>
+
+    <script type="text/javascript" src="{% static 'js/www.js' %}"></script>
+    <script>
+      const btn = document.getElementById('menu-btn');
+      const menu = document.getElementById('mobile-menu');
+      const icon = document.getElementById('menu-icon');
+      if (btn) {
+        btn.addEventListener('click', () => {
+          const open = menu.classList.toggle('open');
+          btn.setAttribute('aria-expanded', open);
+          icon.textContent = open ? 'close' : 'menu';
+        });
+      }
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
