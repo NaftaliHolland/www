@@ -5,10 +5,9 @@
 {% block content %}
 <div id="top">
 
-  <!-- Hero / About -->
   <section id="about" class="max-w-site mx-auto px-6 md:px-10 pt-16 md:pt-24 pb-16 md:pb-24">
-    <p class="font-mono text-[13px] text-muted mb-6">{{ page.home_subtitle }}</p>
-    <h1 class="font-display text-4xl sm:text-5xl md:text-6xl leading-[1.08] tracking-tight max-w-3xl">
+    <p class="font-mono text-xl text-muted mb-6">{{ page.home_subtitle }}</p>
+    <h1 class="font-display text-3xl sm:text-4xl md:text-5xl leading-[1.08] tracking-tight max-w-3xl">
       {{ page.hero_heading }}
     </h1>
     {% if page.about_text %}
@@ -26,13 +25,12 @@
     {% endif %}
   </section>
 
-  <!-- Featured Work -->
   {% if featured_projects %}
   <section id="work" class="section-rule">
     <div class="max-w-site mx-auto px-6 md:px-10 py-16 md:py-24">
       <div class="flex items-end justify-between flex-wrap gap-4 mb-10">
         <div>
-          <p class="font-mono text-[13px] text-muted mb-3">/work</p>
+          <!-- <p class="font-mono text-[13px] text-muted mb-3">/work</p> -->
           <h2 class="font-display text-3xl md:text-4xl tracking-tight">Featured work</h2>
         </div>
         {% if nav_projects %}
@@ -62,11 +60,9 @@
   </section>
   {% endif %}
 
-  <!-- Experience -->
   {% if experience_items %}
   <section id="experience" class="section-rule">
     <div class="max-w-site mx-auto px-6 md:px-10 py-16 md:py-24">
-      <p class="font-mono text-[13px] text-muted mb-3">/experience</p>
       <h2 class="font-display text-3xl md:text-4xl tracking-tight mb-10">Experience</h2>
 
       {% for item in experience_items %}
@@ -88,13 +84,11 @@
   </section>
   {% endif %}
 
-  <!-- Speaking -->
   {% if nav_talks %}
   <section id="speaking" class="section-rule">
     <div class="max-w-site mx-auto px-6 md:px-10 py-16 md:py-24">
       <div class="flex items-end justify-between flex-wrap gap-4 mb-10">
         <div>
-          <p class="font-mono text-[13px] text-muted mb-3">/speaking</p>
           <h2 class="font-display text-3xl md:text-4xl tracking-tight">Speaking</h2>
         </div>
         <a href="{% pageurl nav_talks %}" class="font-mono text-[13px] text-signal hover:underline whitespace-nowrap">view all talks →</a>
@@ -120,14 +114,12 @@
   </section>
   {% endif %}
 
-  <!-- Writing -->
   {% if nav_writing %}
   <section id="writing" class="section-rule">
     <div class="max-w-site mx-auto px-6 md:px-10 py-16 md:py-24">
       <div class="flex items-end justify-between flex-wrap gap-4 mb-10">
         <div>
-          <p class="font-mono text-[13px] text-muted mb-3">/writing</p>
-          <h2 class="font-display text-3xl md:text-4xl tracking-tight">Technical writing</h2>
+          <h2 class="font-display text-3xl md:text-4xl tracking-tight">Writing</h2>
         </div>
         <a href="{% pageurl nav_writing %}" class="font-mono text-[13px] text-signal hover:underline whitespace-nowrap">read all articles →</a>
       </div>
@@ -155,7 +147,6 @@
   {% if nav_contact %}
   <section class="section-rule bg-ink text-paper">
     <div class="max-w-site mx-auto px-6 md:px-10 py-16 md:py-24 text-center">
-      <p class="font-mono text-[13px] text-signal mb-4">/contact</p>
       <h2 class="font-display text-3xl md:text-4xl tracking-tight mb-5">{{ page.contact_heading }}</h2>
       {% if page.contact_body %}<p class="text-white/60 max-w-md mx-auto mb-8 leading-relaxed">{{ page.contact_body }}</p>{% endif %}
       <a href="{% pageurl nav_contact %}" class="inline-block font-mono text-sm px-6 py-3 bg-paper text-ink hover:bg-signal hover:text-paper transition-colors">get in touch →</a>

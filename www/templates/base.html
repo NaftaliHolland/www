@@ -41,16 +41,16 @@
 
     <header class="sticky top-0 z-50 bg-paper/90 backdrop-blur border-b border-line">
       <div class="max-w-site mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
-        <a href="{% if nav_home %}{% pageurl nav_home %}{% else %}/{% endif %}" class="font-mono text-sm text-ink">
-          holland<span class="text-signal">@</span>dev<span class="text-muted">:~$</span><span class="cursor-blink text-signal">_</span>
-        </a>
+        <!-- <a href="{% if nav_home %}{% pageurl nav_home %}{% else %}/{% endif %}" class="font-mono text-sm text-ink">
+          Naftali Holland
+</a>-->
         <nav class="hidden md:flex items-center gap-8 font-mono text-[13px] text-inksoft">
-          {% if nav_home %}<a href="{% pageurl nav_home %}#about" class="hover:text-signal transition-colors {% if self.pk == nav_home.pk %}text-signal{% endif %}">/about</a>{% endif %}
-          {% if nav_projects %}<a href="{% pageurl nav_projects %}" class="hover:text-signal transition-colors {% if page.pk == nav_projects.pk or nav_projects in page.get_ancestors %}text-signal{% endif %}">/work</a>{% endif %}
-          {% if nav_home %}<a href="{% pageurl nav_home %}#experience" class="hover:text-signal transition-colors">/experience</a>{% endif %}
-          {% if nav_talks %}<a href="{% pageurl nav_talks %}" class="hover:text-signal transition-colors {% if page.pk == nav_talks.pk or nav_talks in page.get_ancestors %}text-signal{% endif %}">/speaking</a>{% endif %}
-          {% if nav_writing %}<a href="{% pageurl nav_writing %}" class="hover:text-signal transition-colors {% if page.pk == nav_writing.pk or nav_writing in page.get_ancestors %}text-signal{% endif %}">/writing</a>{% endif %}
-          {% if nav_contact %}<a href="{% pageurl nav_contact %}" class="px-3 py-1.5 border {% if page.pk == nav_contact.pk %}border-signal text-signal{% else %}border-ink text-ink hover:bg-ink hover:text-paper{% endif %} transition-colors">/contact</a>{% endif %}
+          {% if nav_home %}<a href="{% pageurl nav_home %}#about" class="hover:text-signal transition-colors {% if self.pk == nav_home.pk %}text-signal{% endif %}">about</a>{% endif %}
+          {% if nav_projects %}<a href="{% pageurl nav_projects %}" class="hover:text-signal transition-colors {% if page.pk == nav_projects.pk or nav_projects in page.get_ancestors %}text-signal{% endif %}">work</a>{% endif %}
+          {% if nav_home %}<a href="{% pageurl nav_home %}#experience" class="hover:text-signal transition-colors">experience</a>{% endif %}
+          {% if nav_talks %}<a href="{% pageurl nav_talks %}" class="hover:text-signal transition-colors {% if page.pk == nav_talks.pk or nav_talks in page.get_ancestors %}text-signal{% endif %}">speaking</a>{% endif %}
+          {% if nav_writing %}<a href="{% pageurl nav_writing %}" class="hover:text-signal transition-colors {% if page.pk == nav_writing.pk or nav_writing in page.get_ancestors %}text-signal{% endif %}">writing</a>{% endif %}
+          {% if nav_contact %}<a href="{% pageurl nav_contact %}" class="px-3 py-1.5 border {% if page.pk == nav_contact.pk %}border-signal text-signal{% else %}border-ink text-ink hover:bg-ink hover:text-paper{% endif %} transition-colors">contact</a>{% endif %}
         </nav>
         <button id="menu-btn" class="md:hidden font-mono text-sm text-ink" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
           <span id="menu-icon">menu</span>
@@ -72,12 +72,12 @@
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="border-t border-line">
+    <!--<footer class="border-t border-line">
       <div class="max-w-site mx-auto px-6 md:px-10 py-8 flex flex-col md:flex-row items-center justify-between gap-3">
         <p class="font-mono text-xs text-muted">© {% now "Y" %} Holland. Built with Wagtail & Tailwind.</p>
         {% if nav_home %}<a href="{% pageurl nav_home %}" class="font-mono text-xs text-muted hover:text-signal transition-colors">← back home</a>{% endif %}
       </div>
-    </footer>
+</footer>-->
 
     <script type="text/javascript" src="{% static 'js/www.js' %}"></script>
     <script>
