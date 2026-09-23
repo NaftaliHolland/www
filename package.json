@@ -1,0 +1,31 @@
+{
+  "name": "www",
+  "version": "1.0.0",
+  "description": "This is a porfolio site built with [Wagtail](https://wagtail.org/). Probably overkill for a simple portfolios site but it was a simple enough and had enough features for me to get my hands dirty with Wagtail. I needed to learn Wagtail for a different project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tailwindcss -i ./src/input.css -o ./www/static/css/styles.css --watch",
+    "build": "tailwindcss -i ./src/input.css -o ./www/static/css/styles.css --minify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NaftaliHolland/www.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/NaftaliHolland/www/issues"
+  },
+  "homepage": "https://github.com/NaftaliHolland/www#readme",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.0",
+    "tailwindcss": "^4.1.0"
+  }
+}
